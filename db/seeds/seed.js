@@ -1,6 +1,6 @@
 const db = require('../connection');
 const format = require('pg-format');
-const topics = require('../data/development-data/topics');
+const { formattedTopics, formattedUser } = require('../../utils/utils');
 
 const seed = async data => {
   const { articleData, commentData, topicData, userData } = data;
@@ -37,11 +37,41 @@ const seed = async data => {
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     body VARCHAR(500) NOT NULL
   );`);
+
+  // 2. insert data
+
+  const formatTopic = formattedTopics(topicData);
+  // const formatUser = formattedUser(userData);
+
+  const topicSql = format(
+    `INSERT INTO topics
+    (slug, description)
+    VALUES %L
+    RETURNING *;`,
+    formatTopic
+  );
+
+  // const userSql = format(
+  //   `INSERT INTO users
+  //   (username, avatar_url, name)
+  //   VALUES %L
+  //   RETURNING *;`,
+  //   formatUser
+  // );
+
+//console.log(topicData,'topicdata');
+
+const topics = await db.query(topicSql);
+const topicRows = topics.rows;
+// const userInput = await db.query(userSql);
+
+
+
+
   } catch (error) {
     console.log(error);
   }
 
-  // 2. insert data
 };
 
 module.exports = seed;

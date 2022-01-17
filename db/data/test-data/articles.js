@@ -96,5 +96,3 @@ module.exports = [
     votes: 0
   }
 ];
-
-console.log(module.exports);
