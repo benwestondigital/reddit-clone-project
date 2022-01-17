@@ -1,7 +1,11 @@
 const db = require('../db/connection.js');
 const testData = require('../db/data/test-data/index.js');
 const seed = require('../db/seeds/seed.js');
-const { formattedTopics, formattedUsers } = require('../utils/utils');
+const {
+  formattedTopics,
+  formattedUsers,
+  formattedArticles,
+} = require('../utils/utils');
 
 beforeEach(() => seed(testData));
 afterAll(() => db.end());
@@ -96,49 +100,132 @@ describe('formattedUsers()', () => {
   });
   test('returns a nested array for multiple items', () => {
     const user = [
-        {
-          username: 'butter_bridge',
-          name: 'jonny',
-          avatar_url: 'https://www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg'
-        },
-        {
-          username: 'icellusedkars',
-          name: 'sam',
-          avatar_url: 'https://avatars2.githubusercontent.com/u/24604688?s=460&v=4'
-        },
-        {
-          username: 'rogersop',
-          name: 'paul',
-          avatar_url: 'https://avatars2.githubusercontent.com/u/24394918?s=400&v=4'
-        },
-        {
-          username: 'lurker',
-          name: 'do_nothing',
-          avatar_url: 'https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png'
-        }
-      ];
+      {
+        username: 'butter_bridge',
+        name: 'jonny',
+        avatar_url:
+          'https://www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg',
+      },
+      {
+        username: 'icellusedkars',
+        name: 'sam',
+        avatar_url:
+          'https://avatars2.githubusercontent.com/u/24604688?s=460&v=4',
+      },
+      {
+        username: 'rogersop',
+        name: 'paul',
+        avatar_url:
+          'https://avatars2.githubusercontent.com/u/24394918?s=400&v=4',
+      },
+      {
+        username: 'lurker',
+        name: 'do_nothing',
+        avatar_url:
+          'https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png',
+      },
+    ];
     const testInput = formattedUsers(user);
     expect(testInput).toEqual([
-        [
-          'butter_bridge',
-          'https://www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg',
-          'jonny'
-        ],
-        [
-          'icellusedkars',
-          'https://avatars2.githubusercontent.com/u/24604688?s=460&v=4',
-          'sam'
-        ],
-        [
-          'rogersop',
-          'https://avatars2.githubusercontent.com/u/24394918?s=400&v=4',
-          'paul'
-        ],
-        [
-          'lurker',
-          'https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png',
-          'do_nothing'
-        ]
+      [
+        'butter_bridge',
+        'https://www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg',
+        'jonny',
+      ],
+      [
+        'icellusedkars',
+        'https://avatars2.githubusercontent.com/u/24604688?s=460&v=4',
+        'sam',
+      ],
+      [
+        'rogersop',
+        'https://avatars2.githubusercontent.com/u/24394918?s=400&v=4',
+        'paul',
+      ],
+      [
+        'lurker',
+        'https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png',
+        'do_nothing',
+      ],
+    ]);
+  });
+
+  describe.only('formattedArticles()', () => {
+    test('input is not output', () => {
+      const input = [
+        {
+          title: 'Am I a cat?',
+          topic: 'mitch',
+          author: 'icellusedkars',
+          body: 'Having run out of ideas for articles, I am staring at the wall blankly, like a cat. Does this make me a cat?',
+          created_at: new Date(1579126860000),
+          votes: 0,
+        },
+      ];
+      const test = formattedArticles(input);
+      expect(test).not.toBe(input);
+    });
+    test('input is not mutated', () => {
+      const input = [
+        {
+          title: 'Am I a cat?',
+          topic: 'mitch',
+          author: 'icellusedkars',
+          body: 'Having run out of ideas for articles, I am staring at the wall blankly, like a cat. Does this make me a cat?',
+          created_at: new Date(1579126860000),
+          votes: 0,
+        },
+      ];
+      formattedArticles(input);
+      expect(input).toEqual([
+        {
+          title: 'Am I a cat?',
+          topic: 'mitch',
+          author: 'icellusedkars',
+          body: 'Having run out of ideas for articles, I am staring at the wall blankly, like a cat. Does this make me a cat?',
+          created_at: new Date(1579126860000),
+          votes: 0,
+        },
       ]);
+    });
+    test('returns an array', () => {
+      const input = [
+        {
+          title: 'Am I a cat?',
+          topic: 'mitch',
+          author: 'icellusedkars',
+          body: 'Having run out of ideas for articles, I am staring at the wall blankly, like a cat. Does this make me a cat?',
+          created_at: new Date(1579126860000),
+          votes: 0,
+        },
+      ];
+      const test = formattedArticles(input);
+      expect(Array.isArray(test)).toBe(true);
+    });
+    test('returns a nested array', () => {
+      const input = [
+        {
+          title: 'Am I a cat?',
+          topic: 'mitch',
+          author: 'icellusedkars',
+          body: 'Having run out of ideas for articles, I am staring at the wall blankly, like a cat. Does this make me a cat?',
+          created_at: new Date(1579126860000),
+          votes: 0,
+        },
+      ];
+      const test = formattedArticles(input);
+      expect(test).toEqual([
+        [
+          'Am I a cat?',
+          'Having run out of ideas for articles, I am staring at the wall blankly, like a cat. Does this make me a cat?',
+          0,
+          'mitch',
+          'icellusedkars',
+          new Date(1579126860000),
+        ],
+      ]);
+    });
   });
 });
+
+

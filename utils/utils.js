@@ -9,3 +9,16 @@ exports.formattedUsers = userData => {
     return [user.username, user.avatar_url, user.name];
   });
 };
+
+exports.formattedArticles = articleData => {
+  return articleData.map(article => {
+    return [
+      article.title,
+      article.body,
+      article.votes,
+      article.topic,
+      article.author,
+      article.created_at,
+    ];
+  });
+};
