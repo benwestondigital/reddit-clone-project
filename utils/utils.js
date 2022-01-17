@@ -22,3 +22,15 @@ exports.formattedArticles = articleData => {
     ];
   });
 };
+
+exports.formattedComments = commentData => {
+  return commentData.map(comment => {
+    return [
+      comment.author,
+      comment.article_id,
+      comment.votes,
+      comment.created_at,
+      comment.body,
+    ];
+  });
+};

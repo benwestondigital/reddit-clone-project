@@ -5,6 +5,7 @@ const {
   formattedTopics,
   formattedUsers,
   formattedArticles,
+  formattedComments,
 } = require('../utils/utils');
 
 beforeEach(() => seed(testData));
@@ -26,7 +27,7 @@ describe('formattedTopics()', () => {
     const testInput = formattedTopics(topic);
     expect(Array.isArray(testInput)).toBe(true);
   });
-  test('returns a nested array', () => {
+  test('returns a nested array in the correct format', () => {
     const topic = [{ description: 'FOOTIE!', slug: 'football' }];
     const testInput = formattedTopics(topic);
     expect(testInput).toEqual([['football', 'FOOTIE!']]);
@@ -45,6 +46,7 @@ describe('formattedTopics()', () => {
     ]);
   });
 });
+
 describe('formattedUsers()', () => {
   test('input is not output', () => {
     const user = [
@@ -85,7 +87,7 @@ describe('formattedUsers()', () => {
     const testInput = formattedUsers(user);
     expect(Array.isArray(testInput)).toBe(true);
   });
-  test('returns a nested array', () => {
+  test('returns a nested array in the correct format', () => {
     const user = [
       {
         username: 'butter_bridge',
@@ -149,83 +151,152 @@ describe('formattedUsers()', () => {
       ],
     ]);
   });
+});
 
-  describe.only('formattedArticles()', () => {
-    test('input is not output', () => {
-      const input = [
-        {
-          title: 'Am I a cat?',
-          topic: 'mitch',
-          author: 'icellusedkars',
-          body: 'Having run out of ideas for articles, I am staring at the wall blankly, like a cat. Does this make me a cat?',
-          created_at: new Date(1579126860000),
-          votes: 0,
-        },
-      ];
-      const test = formattedArticles(input);
-      expect(test).not.toBe(input);
-    });
-    test('input is not mutated', () => {
-      const input = [
-        {
-          title: 'Am I a cat?',
-          topic: 'mitch',
-          author: 'icellusedkars',
-          body: 'Having run out of ideas for articles, I am staring at the wall blankly, like a cat. Does this make me a cat?',
-          created_at: new Date(1579126860000),
-          votes: 0,
-        },
-      ];
-      formattedArticles(input);
-      expect(input).toEqual([
-        {
-          title: 'Am I a cat?',
-          topic: 'mitch',
-          author: 'icellusedkars',
-          body: 'Having run out of ideas for articles, I am staring at the wall blankly, like a cat. Does this make me a cat?',
-          created_at: new Date(1579126860000),
-          votes: 0,
-        },
-      ]);
-    });
-    test('returns an array', () => {
-      const input = [
-        {
-          title: 'Am I a cat?',
-          topic: 'mitch',
-          author: 'icellusedkars',
-          body: 'Having run out of ideas for articles, I am staring at the wall blankly, like a cat. Does this make me a cat?',
-          created_at: new Date(1579126860000),
-          votes: 0,
-        },
-      ];
-      const test = formattedArticles(input);
-      expect(Array.isArray(test)).toBe(true);
-    });
-    test('returns a nested array', () => {
-      const input = [
-        {
-          title: 'Am I a cat?',
-          topic: 'mitch',
-          author: 'icellusedkars',
-          body: 'Having run out of ideas for articles, I am staring at the wall blankly, like a cat. Does this make me a cat?',
-          created_at: new Date(1579126860000),
-          votes: 0,
-        },
-      ];
-      const test = formattedArticles(input);
-      expect(test).toEqual([
-        [
-          'Am I a cat?',
-          'Having run out of ideas for articles, I am staring at the wall blankly, like a cat. Does this make me a cat?',
-          0,
-          'mitch',
-          'icellusedkars',
-          new Date(1579126860000),
-        ],
-      ]);
-    });
+describe('formattedArticles()', () => {
+  test('input is not output', () => {
+    const input = [
+      {
+        title: 'Am I a cat?',
+        topic: 'mitch',
+        author: 'icellusedkars',
+        body: 'Having run out of ideas for articles, I am staring at the wall blankly, like a cat. Does this make me a cat?',
+        created_at: new Date(1579126860000),
+        votes: 0,
+      },
+    ];
+    const test = formattedArticles(input);
+    expect(test).not.toBe(input);
+  });
+  test('input is not mutated', () => {
+    const input = [
+      {
+        title: 'Am I a cat?',
+        topic: 'mitch',
+        author: 'icellusedkars',
+        body: 'Having run out of ideas for articles, I am staring at the wall blankly, like a cat. Does this make me a cat?',
+        created_at: new Date(1579126860000),
+        votes: 0,
+      },
+    ];
+    formattedArticles(input);
+    expect(input).toEqual([
+      {
+        title: 'Am I a cat?',
+        topic: 'mitch',
+        author: 'icellusedkars',
+        body: 'Having run out of ideas for articles, I am staring at the wall blankly, like a cat. Does this make me a cat?',
+        created_at: new Date(1579126860000),
+        votes: 0,
+      },
+    ]);
+  });
+  test('returns an array', () => {
+    const input = [
+      {
+        title: 'Am I a cat?',
+        topic: 'mitch',
+        author: 'icellusedkars',
+        body: 'Having run out of ideas for articles, I am staring at the wall blankly, like a cat. Does this make me a cat?',
+        created_at: new Date(1579126860000),
+        votes: 0,
+      },
+    ];
+    const test = formattedArticles(input);
+    expect(Array.isArray(test)).toBe(true);
+  });
+  test('returns a nested array in the correct format', () => {
+    const input = [
+      {
+        title: 'Am I a cat?',
+        topic: 'mitch',
+        author: 'icellusedkars',
+        body: 'Having run out of ideas for articles, I am staring at the wall blankly, like a cat. Does this make me a cat?',
+        created_at: new Date(1579126860000),
+        votes: 0,
+      },
+    ];
+    const test = formattedArticles(input);
+    expect(test).toEqual([
+      [
+        'Am I a cat?',
+        'Having run out of ideas for articles, I am staring at the wall blankly, like a cat. Does this make me a cat?',
+        0,
+        'mitch',
+        'icellusedkars',
+        new Date(1579126860000),
+      ],
+    ]);
   });
 });
 
-
+describe('formattedComments()', () => {
+  test('input is not output', () => {
+    const input = [
+      {
+        body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+        votes: 16,
+        author: 'butter_bridge',
+        article_id: 9,
+        created_at: new Date(1586179020000),
+      },
+    ];
+    const test = formattedComments(input);
+    expect(test).not.toBe(input);
+  });
+  test('input is not mutated', () => {
+    const input = [
+      {
+        body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+        votes: 16,
+        author: 'butter_bridge',
+        article_id: 9,
+        created_at: new Date(1586179020000),
+      },
+    ];
+    formattedComments(input);
+    expect(input).toEqual([
+      {
+        body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+        votes: 16,
+        author: 'butter_bridge',
+        article_id: 9,
+        created_at: new Date(1586179020000),
+      },
+    ]);
+  });
+  test('returns an array', () => {
+    const input = [
+      {
+        body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+        votes: 16,
+        author: 'butter_bridge',
+        article_id: 9,
+        created_at: new Date(1586179020000),
+      },
+    ];
+    const test = formattedComments(input);
+    expect(Array.isArray(test)).toBe(true);
+  });
+  test('returns a nested array in the correct format', () => {
+    const input = [
+      {
+        body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+        votes: 16,
+        author: 'butter_bridge',
+        article_id: 9,
+        created_at: new Date(1586179020000),
+      },
+    ];
+    const test = formattedComments(input);
+    expect(test).toEqual([
+      [
+        'butter_bridge',
+        9,
+        16,
+        new Date(1586179020000),
+        "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+      ],
+    ]);
+  });
+});

@@ -4,6 +4,7 @@ const {
   formattedTopics,
   formattedUsers,
   formattedArticles,
+  formattedComments,
 } = require('../../utils/utils');
 
 const seed = async data => {
@@ -13,12 +14,12 @@ const seed = async data => {
     await db.query(`DROP TABLE IF EXISTS comments, articles, users, topics`);
 
     await db.query(`CREATE TABLE topics (
-    slug VARCHAR(500) PRIMARY KEY,
+    slug VARCHAR(50) PRIMARY KEY,
     description VARCHAR(500) NOT NULL
   );`);
 
     await db.query(`CREATE TABLE users (
-    username VARCHAR(500) PRIMARY KEY,
+    username VARCHAR(50) PRIMARY KEY,
     avatar_url VARCHAR(500) NOT NULL,
     name VARCHAR(500) NOT NULL
     );`);
@@ -42,47 +43,61 @@ const seed = async data => {
     body VARCHAR(500) NOT NULL
   );`);
 
-    // 2. insert data
+    await insertTopics();
+    await insertUsers();
+    await InsertArticles();
+    await InsertComments();
 
-    //topics
+  } catch (error) {
+    console.log(error);
+  }
+
+  async function insertTopics() {
     const formatTopic = formattedTopics(topicData);
-    const topicSql = format(
+    const sql = format(
       `INSERT INTO topics
       (slug, description)
       VALUES %L
       RETURNING *;`,
       formatTopic
     );
-    const topics = await db.query(topicSql);
-    const topicRows = topics.rows;
+    await db.query(sql);
+  }
 
-    //users
+  async function insertUsers() {
     const formatUser = formattedUsers(userData);
-    const userSql = format(
+    const sql = format(
       `INSERT INTO users
       (username, avatar_url, name)
       VALUES %L
       RETURNING *;`,
       formatUser
     );
-    const users = await db.query(userSql);
-    const userRows = users.rows;
+    await db.query(sql);
+  }
 
-    //articles
+  async function InsertArticles() {
     const formatArticles = formattedArticles(articleData);
-    const articleSql = format(
+    const sql = format(
       `INSERT INTO articles
       (title, body, votes, topic, author, created_at)
       VALUES %L
       RETURNING *;`,
       formatArticles
     );
-    const articles = await db.query(articleSql);
-    const articleRows = articles.rows;
+    await db.query(sql);
+  }
 
-    //comments
-  } catch (error) {
-    console.log(error);
+  async function InsertComments() {
+    const formatComments = formattedComments(commentData);
+    const sql = format(
+      `INSERT INTO comments
+      (author, article_id, votes, created_at, body)
+      VALUES %L
+      RETURNING *;`,
+      formatComments
+    );
+    await db.query(sql);
   }
 };
 
