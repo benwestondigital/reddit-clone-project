@@ -4,7 +4,7 @@ exports.formattedTopics = topicData => {
   });
 };
 
-exports.formattedUser = userData => {
+exports.formattedUsers = userData => {
   return userData.map(user => {
     return [user.username, user.avatar_url, user.name];
   });

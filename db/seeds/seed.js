@@ -1,6 +1,6 @@
 const db = require('../connection');
 const format = require('pg-format');
-const { formattedTopics, formattedUser } = require('../../utils/utils');
+const { formattedTopics, formattedUsers } = require('../../utils/utils');
 
 const seed = async data => {
   const { articleData, commentData, topicData, userData } = data;
@@ -41,7 +41,7 @@ const seed = async data => {
   // 2. insert data
 
   const formatTopic = formattedTopics(topicData);
-  // const formatUser = formattedUser(userData);
+  const formatUser = formattedUsers(userData);
 
   const topicSql = format(
     `INSERT INTO topics
@@ -51,20 +51,18 @@ const seed = async data => {
     formatTopic
   );
 
-  // const userSql = format(
-  //   `INSERT INTO users
-  //   (username, avatar_url, name)
-  //   VALUES %L
-  //   RETURNING *;`,
-  //   formatUser
-  // );
+  const userSql = format(
+    `INSERT INTO users
+    (username, avatar_url, name)
+    VALUES %L
+    RETURNING *;`,
+    formatUser
+  );
 
-//console.log(topicData,'topicdata');
 
 const topics = await db.query(topicSql);
 const topicRows = topics.rows;
-// const userInput = await db.query(userSql);
-
+const userInput = await db.query(userSql);
 
 
 
