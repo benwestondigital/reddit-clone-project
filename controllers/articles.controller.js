@@ -8,7 +8,7 @@ exports.getArticles = async (req, res, next) => {
     const articles = await selectArticles();
     res.status(200).send({ articles });
   } catch (err) {
-    Promise.reject(err);
+    next(err);
   }
 };
 
