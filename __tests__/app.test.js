@@ -65,6 +65,10 @@ describe('/api/articles/:article_id', () => {
       const test = await request(app).get('/api/articles/999').expect(404);
       expect(test.body.msg).toBe('No article found for article_id: 999');
     });
+    test('ERROR: 400 - bad request', async () => {
+      const test = await request(app).get('/api/articles/notAnId').expect(400);
+      expect(test.body.msg).toBe('Bad Request');
+    });
   });
 });
 
