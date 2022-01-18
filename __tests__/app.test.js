@@ -39,3 +39,22 @@ describe('GET /api/articles', () => {
     });
   });
 });
+
+describe('GET /api/articles/:article_id', () => {
+  test('200 - responds with article object with article_id corresponding to the parameter', async () => {
+    const test = await request(app).get('/api/articles/3').expect(200);
+    const article = test.body.article;
+    expect(article).toBeInstanceOf(Object);
+    expect(article).toEqual(
+      expect.objectContaining({
+        author: expect.any(String),
+        title: expect.any(String),
+        article_id: expect.any(Number),
+        topic: expect.any(String),
+        created_at: expect.any(String),
+        votes: expect.any(Number),
+        comment_count: expect.any(String),
+      })
+    );
+  });
+});

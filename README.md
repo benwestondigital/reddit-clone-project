@@ -81,10 +81,10 @@ _This is a summary of all the endpoints. More detail about each endpoint is furt
 **Essential endpoints**
 
 ```http
-GET /api/topics
-GET /api/articles/:article_id
+x GET /api/topics
+X GET /api/articles/:article_id
 PATCH /api/articles/:article_id
-GET /api/articles
+x GET /api/articles
 GET /api/articles/:article_id/comments
 POST /api/articles/:article_id/comments
 DELETE /api/comments/:comment_id
