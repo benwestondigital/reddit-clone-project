@@ -13,6 +13,7 @@ describe('GET /api/topics', () => {
     .get('/api/topics')
     .expect(200);
     const topics = test.body.topics;
+    console.log(topics);
     expect(topics).toBeInstanceOf(Array);
     topics.forEach(topic => {
       expect(topic).toMatchObject({

@@ -1,15 +1,9 @@
-const db = require('../db/connection.js');
-const testData = require('../db/data/test-data/index.js');
-const seed = require('../db/seeds/seed.js');
 const {
   formattedTopics,
   formattedUsers,
   formattedArticles,
   formattedComments,
 } = require('../utils/utils');
-
-beforeEach(() => seed(testData));
-afterAll(() => db.end());
 
 describe('formattedTopics()', () => {
   test('input is not output', () => {
