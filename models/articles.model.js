@@ -10,7 +10,7 @@ exports.selectArticles = async () => {
   return rows;
 };
 
-exports.selectArticleById = async (article_id) => {
+exports.selectArticleById = async article_id => {
   const { rows } = await db.query(
     `
   SELECT articles.*, COUNT(comment_id) AS comment_count
@@ -22,5 +22,12 @@ exports.selectArticleById = async (article_id) => {
   `,
     [article_id]
   );
-  return rows[0];
+  const article = rows[0];
+  if (!article) {
+    return Promise.reject({
+      status: 404,
+      msg: `No article found for article_id: ${article_id}`,
+    });
+  }
+  return article;
 };
