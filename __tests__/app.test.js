@@ -77,7 +77,7 @@ describe('/api/articles/:article_id', () => {
       expect(test.body.msg).toBe('Bad Request');
     });
   });
-  describe.only('PATCH', () => {
+  describe('PATCH', () => {
     const article = {
       article_id: 1,
       title: 'Living in the shadow of a great man',
@@ -143,6 +143,31 @@ describe('/api/articles/:article_id', () => {
         .send(invalidVotes)
         .expect(400);
       expect(test.body.msg).toBe('Bad Request');
+    });
+  });
+});
+
+describe('/api/articles/:article_id/comments', () => {
+  describe('GET', () => {
+    test('200: returns array of comments for corresponding article_id', async () => {
+      const test = await request(app)
+        .get('/api/articles/1/comments')
+        .expect(200);
+      const comments = test.body.comments;
+      expect(comments).toBeInstanceOf(Array);
+      comments.forEach(comment => {
+        expect(comment).toMatchObject({
+          comment_id: expect.any(Number),
+          votes: expect.any(Number),
+          created_at: expect.any(String),
+          author: expect.any(String),
+          body: expect.any(String),
+        });
+      });
+    });
+    test('ERROR - 404: Resource Not Found', async () => {
+      const test = await request(app).get('/api/articles/999/comments').expect(404);
+      expect(test.body.msg).toBe('No comments found for article_id: 999');
     });
   });
 });
