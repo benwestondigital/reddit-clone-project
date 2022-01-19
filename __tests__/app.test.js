@@ -77,18 +77,7 @@ describe('/api/articles/:article_id', () => {
       expect(test.body.msg).toBe('Bad Request');
     });
   });
-
   describe('PATCH', () => {
-    const article = {
-      article_id: 1,
-      title: 'Living in the shadow of a great man',
-      body: 'I find this existence challenging',
-      votes: 100,
-      topic: 'mitch',
-      author: 'butter_bridge',
-      created_at: '2020-07-09T20:11:00.000Z',
-      comment_count: '11',
-    };
     test('200 - positively increments the article votes and responds with the updated article ', async () => {
       const votes = { inc_votes: 1 };
       const test = await request(app)
@@ -173,7 +162,6 @@ describe('/api/articles/:article_id/comments', () => {
       expect(test.body.msg).toBe('No comments found for article_id: 999');
     });
   });
-
   describe('POST', () => {
     test('201: adds comment with username and body and returns posted comment', async () => {
       const newComment = {
@@ -209,6 +197,17 @@ describe('/api/articles/:article_id/comments', () => {
         .send(invalidComment)
         .expect(400);
       expect(test.body.msg).toBe('Bad Request');
+    });
+  });
+});
+
+describe('/api/comments/:comment_id', () => {
+  describe('DELETE', () => {
+    test('204: delete comment by corresponding comment_id ', async () => {
+      await request(app).delete('/api/comments/1').expect(204);
+    });
+    test("ERROR: 404: comment_id doesn't exist", async () => {
+      await request(app).delete('/api/comments/999').expect(404);
     });
   });
 });

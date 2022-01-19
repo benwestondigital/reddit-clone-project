@@ -15,8 +15,4 @@ articleRouter.patch('/:article_id', patchArticleById);
 articleRouter.get('/:article_id/comments', getArticleCommentsById);
 articleRouter.post('/:article_id/comments', postArticleCommentById)
 
-/* 
-GET /api/articles/:article_id/comments
-POST /api/articles/:article_id/comments */
-
 module.exports = articleRouter;
