@@ -59,7 +59,7 @@ Bear in mind, handling bad inputs from clients doesn't necessarily have to lead 
 
 ### POST `/api/articles/:article_id/comments`
 
--
+- 400 bad request DONE
 
 ### GET `/api/articles/:article_id/comments`
 

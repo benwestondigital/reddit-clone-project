@@ -7,8 +7,8 @@ const app = require('../app');
 beforeEach(() => seed(testData));
 afterAll(() => db.end());
 
-describe('ERROR /invalid_url endpoint', () => {
-  test('404 and message', async () => {
+describe('/invalid_url endpoint', () => {
+  test('ERROR - 404 and message', async () => {
     const test = await request(app).get('/invalid_url').expect(404);
     expect(test.body.msg).toBe('Invalid URL');
   });
@@ -77,6 +77,7 @@ describe('/api/articles/:article_id', () => {
       expect(test.body.msg).toBe('Bad Request');
     });
   });
+
   describe('PATCH', () => {
     const article = {
       article_id: 1,
@@ -120,7 +121,7 @@ describe('/api/articles/:article_id', () => {
         created_at: '2020-07-09T20:11:00.000Z',
       });
     });
-    test('400 Bad Request - malformed body / missing required fields', async () => {
+    test('ERROR - 400 Bad Request - malformed body / missing required fields', async () => {
       const invalidVotes = {};
       const test = await request(app)
         .patch('/api/articles/1')
@@ -128,7 +129,7 @@ describe('/api/articles/:article_id', () => {
         .expect(400);
       expect(test.body.msg).toBe('Bad Request');
     });
-    test('400 Bad Request - malformed body - other properties included on request body', async () => {
+    test('ERROR - 400 Bad Request - malformed body - other properties included on request body', async () => {
       const invalidVotes = { inc_votes: 1, name: 'Mitch' };
       const test = await request(app)
         .patch('/api/articles/1')
@@ -136,7 +137,7 @@ describe('/api/articles/:article_id', () => {
         .expect(400);
       expect(test.body.msg).toBe('Bad Request');
     });
-    test('400 Bad Request - incorrect type / failing schema validation', async () => {
+    test('ERROR - 400 Bad Request - incorrect type / failing schema validation', async () => {
       const invalidVotes = { inc_votes: 'cat' };
       const test = await request(app)
         .patch('/api/articles/1')
@@ -165,9 +166,49 @@ describe('/api/articles/:article_id/comments', () => {
         });
       });
     });
-    test('ERROR - 404: Resource Not Found', async () => {
-      const test = await request(app).get('/api/articles/999/comments').expect(404);
+    test('ERROR - 404: Resource Not Found - article_id does not exist', async () => {
+      const test = await request(app)
+        .get('/api/articles/999/comments')
+        .expect(404);
       expect(test.body.msg).toBe('No comments found for article_id: 999');
+    });
+  });
+
+  describe('POST', () => {
+    test('201: adds comment with username and body and returns posted comment', async () => {
+      const newComment = {
+        username: 'butter_bridge',
+        body: 'this is a great comment',
+      };
+      const addedComment = {
+        comment_id: 19,
+        author: 'butter_bridge',
+        article_id: 1,
+        votes: 0,
+        created_at: expect.any(String),
+        body: 'this is a great comment',
+      };
+      const test = await request(app)
+        .post('/api/articles/1/comments')
+        .send(newComment)
+        .expect(201);
+      expect(test.body.comment).toEqual(addedComment);
+    });
+    test('ERROR 400 Bad Request - malformed body / missing required fields', async () => {
+      const invalidComment = {};
+      const test = await request(app)
+        .post('/api/articles/1/comments')
+        .send(invalidComment)
+        .expect(400);
+      expect(test.body.msg).toBe('Bad Request');
+    });
+    test('ERROR - 400 Bad Request - username not found', async () => {
+      const invalidComment = { username: 'Ben', body: 'Hello' };
+      const test = await request(app)
+        .post('/api/articles/1/comments')
+        .send(invalidComment)
+        .expect(400);
+      expect(test.body.msg).toBe('Bad Request');
     });
   });
 });

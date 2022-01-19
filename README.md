@@ -86,7 +86,7 @@ X GET /api/articles/:article_id
 X PATCH /api/articles/:article_id
 x GET /api/articles
 X GET /api/articles/:article_id/comments
-POST /api/articles/:article_id/comments
+X POST /api/articles/:article_id/comments
 DELETE /api/comments/:comment_id
 GET /api
 ```

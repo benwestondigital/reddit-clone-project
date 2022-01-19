@@ -3,7 +3,8 @@ const {
   selectArticleById,
   updateArticleVotesById,
   selectArticleCommentsById,
-} = require('../models/articles.model');
+  insertCommentByArticleId,
+} = require('../2. models/articles.model');
 
 exports.getArticles = async (req, res, next) => {
   try {
@@ -45,6 +46,17 @@ exports.getArticleCommentsById = async (req, res, next) => {
     const { article_id } = req.params;
     const comments = await selectArticleCommentsById(article_id);
     res.status(200).send({ comments });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.postArticleCommentById = async (req, res, next) => {
+  try {
+    const { article_id } = req.params;
+    const { username, body } = req.body;
+    const comment = await insertCommentByArticleId(article_id, username, body);
+    res.status(201).send({ comment });
   } catch (err) {
     next(err);
   }

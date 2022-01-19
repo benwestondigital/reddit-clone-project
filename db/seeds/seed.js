@@ -5,7 +5,7 @@ const {
   formattedUsers,
   formattedArticles,
   formattedComments,
-} = require('../../utils/utils');
+} = require('../../4. utils/utils');
 
 const seed = async data => {
   const { articleData, commentData, topicData, userData } = data;
