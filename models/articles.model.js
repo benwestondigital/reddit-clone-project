@@ -31,3 +31,16 @@ exports.selectArticleById = async article_id => {
   }
   return article;
 };
+
+exports.patchArticleVotesById = async (article_id, inc_votes) => {
+  const { rows } = await db.query(
+    `UPDATE articles
+    SET votes = votes + $2
+    WHERE article_id = $1
+    RETURNING *
+    ;`,
+    [article_id, inc_votes]
+  );
+  const article = rows[0];
+  return article;
+};

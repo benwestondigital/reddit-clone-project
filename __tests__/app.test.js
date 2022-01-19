@@ -7,6 +7,13 @@ const app = require('../app');
 beforeEach(() => seed(testData));
 afterAll(() => db.end());
 
+describe('ERROR /invalid_url endpoint', () => {
+  test('404 and message', async () => {
+    const test = await request(app).get('/invalid_url').expect(404);
+    expect(test.body.msg).toBe('Invalid URL');
+  });
+});
+
 describe('/api/topics', () => {
   describe('GET', () => {
     test('200 - responds with an array of topic objects', async () => {
@@ -70,11 +77,34 @@ describe('/api/articles/:article_id', () => {
       expect(test.body.msg).toBe('Bad Request');
     });
   });
-});
-
-describe('ERROR /invalid_url', () => {
-  test('404 and message', async () => {
-    const test = await request(app).get('/invalid_url').expect(404);
-    expect(test.body.msg).toBe('Invalid URL');
+  describe('PATCH', () => {
+    test.only('200 - responds with the updated article ', async () => {
+      const article = {
+        article_id: 1,
+        title: 'Living in the shadow of a great man',
+        body: 'I find this existence challenging',
+        votes: 100,
+        topic: 'mitch',
+        author: 'butter_bridge',
+        created_at: '2020-07-09T20:11:00.000Z',
+        comment_count: '11',
+      };
+      const votes = { inc_votes: 1 };
+      const test = await request(app)
+        .patch('/api/articles/1')
+        .send(votes)
+        .expect(200);
+      expect(test.body.article).toEqual({
+        article_id: 1,
+        title: 'Living in the shadow of a great man',
+        body: 'I find this existence challenging',
+        votes: 101,
+        topic: 'mitch',
+        author: 'butter_bridge',
+        created_at: '2020-07-09T20:11:00.000Z',
+      });
+    });
+    test('400 Bad Request - malformed body / missing required fields', async () => {});
+    test('400 Bad Request - incorrect type', async () => {});
   });
 });

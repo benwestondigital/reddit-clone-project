@@ -3,6 +3,8 @@ const apiRouter = require('./routers/api.router');
 
 const app = express();
 
+app.use(express.json());
+
 app.use('/api', apiRouter);
 
 app.all('*', (req, res) => {
@@ -13,7 +15,7 @@ app.use((err, req, res, next) => {
   if (err.code === '22P02') {
     res.status(400).send({ msg: 'Bad Request' });
   } else {
-      next(err);
+    next(err);
   }
 });
 
