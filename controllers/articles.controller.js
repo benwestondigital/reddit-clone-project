@@ -1,7 +1,7 @@
 const {
   selectArticles,
   selectArticleById,
-  patchArticleVotesById
+  patchArticleVotesById,
 } = require('../models/articles.model');
 
 exports.getArticles = async (req, res, next) => {
@@ -25,10 +25,15 @@ exports.getArticleById = async (req, res, next) => {
 
 exports.patchArticleById = async (req, res, next) => {
   try {
-    const { article_id } = req.params;
-    const { inc_votes } = req.body;
-    const article = await patchArticleVotesById(article_id, inc_votes);
-    res.status(200).send({ article });
+    const paramKeys = Object.keys(req.body);
+    if (paramKeys.some(element => element !== 'inc_votes')) {
+      next({ status: 400, msg: 'Bad Request' });
+    } else {
+      const { article_id } = req.params;
+      const { inc_votes } = req.body;
+      const article = await patchArticleVotesById(article_id, inc_votes);
+      res.status(200).send({ article });
+    }
   } catch (err) {
     next(err);
   }

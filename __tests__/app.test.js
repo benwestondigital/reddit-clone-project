@@ -77,18 +77,18 @@ describe('/api/articles/:article_id', () => {
       expect(test.body.msg).toBe('Bad Request');
     });
   });
-  describe('PATCH', () => {
-    test.only('200 - responds with the updated article ', async () => {
-      const article = {
-        article_id: 1,
-        title: 'Living in the shadow of a great man',
-        body: 'I find this existence challenging',
-        votes: 100,
-        topic: 'mitch',
-        author: 'butter_bridge',
-        created_at: '2020-07-09T20:11:00.000Z',
-        comment_count: '11',
-      };
+  describe.only('PATCH', () => {
+    const article = {
+      article_id: 1,
+      title: 'Living in the shadow of a great man',
+      body: 'I find this existence challenging',
+      votes: 100,
+      topic: 'mitch',
+      author: 'butter_bridge',
+      created_at: '2020-07-09T20:11:00.000Z',
+      comment_count: '11',
+    };
+    test('200 - positively increments the article votes and responds with the updated article ', async () => {
       const votes = { inc_votes: 1 };
       const test = await request(app)
         .patch('/api/articles/1')
@@ -104,7 +104,45 @@ describe('/api/articles/:article_id', () => {
         created_at: '2020-07-09T20:11:00.000Z',
       });
     });
-    test('400 Bad Request - malformed body / missing required fields', async () => {});
-    test('400 Bad Request - incorrect type', async () => {});
+    test('200 - decrements the article votes below 0 and responds with the updated article ', async () => {
+      const votes = { inc_votes: -500 };
+      const test = await request(app)
+        .patch('/api/articles/1')
+        .send(votes)
+        .expect(200);
+      expect(test.body.article).toEqual({
+        article_id: 1,
+        title: 'Living in the shadow of a great man',
+        body: 'I find this existence challenging',
+        votes: -400,
+        topic: 'mitch',
+        author: 'butter_bridge',
+        created_at: '2020-07-09T20:11:00.000Z',
+      });
+    });
+    test('400 Bad Request - malformed body / missing required fields', async () => {
+      const invalidVotes = {};
+      const test = await request(app)
+        .patch('/api/articles/1')
+        .send(invalidVotes)
+        .expect(400);
+      expect(test.body.msg).toBe('Bad Request');
+    });
+    test('400 Bad Request - malformed body - other properties included on request body', async () => {
+      const invalidVotes = { inc_votes: 1, name: 'Mitch' };
+      const test = await request(app)
+        .patch('/api/articles/1')
+        .send(invalidVotes)
+        .expect(400);
+      expect(test.body.msg).toBe('Bad Request');
+    });
+    test('400 Bad Request - incorrect type / failing schema validation', async () => {
+      const invalidVotes = { inc_votes: 'cat' };
+      const test = await request(app)
+        .patch('/api/articles/1')
+        .send(invalidVotes)
+        .expect(400);
+      expect(test.body.msg).toBe('Bad Request');
+    });
   });
 });

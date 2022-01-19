@@ -28,7 +28,7 @@ const seed = async data => {
     article_id SERIAL PRIMARY KEY,
     title VARCHAR(500) NOT NULL,
     body TEXT NOT NULL,
-    votes INT DEFAULT 0,
+    votes INT DEFAULT 0 NOT NULL,
     topic VARCHAR(500) REFERENCES topics(slug),
     author VARCHAR(500) REFERENCES users(username),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

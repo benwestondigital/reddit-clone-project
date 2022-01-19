@@ -53,9 +53,9 @@ Bear in mind, handling bad inputs from clients doesn't necessarily have to lead 
 
 ### PATCH `/api/articles/:article_id`
 
-- No `inc_votes` on request body
-- Invalid `inc_votes` (e.g. `{ inc_votes : "cat" }`)
-- Some other property on request body (e.g. `{ inc_votes : 1, name: 'Mitch' }`)
+- No `inc_votes` on request body - DONE
+- Invalid `inc_votes` (e.g. `{ inc_votes : "cat" }`) - DONE
+- Some other property on request body (e.g. `{ inc_votes : 1, name: 'Mitch' }`) - DONE
 
 ### POST `/api/articles/:article_id/comments`
 
