@@ -211,3 +211,13 @@ describe('/api/comments/:comment_id', () => {
     });
   });
 });
+
+describe('/api', () => {
+  describe('GET', () => {
+    test('responds with JSON describing all the endpoints', async () => {
+      const test = await request(app).get('/api/').expect(200);
+      const endpoints = test.body.endpoints;
+      console.log(endpoints);
+    });
+  });
+});
