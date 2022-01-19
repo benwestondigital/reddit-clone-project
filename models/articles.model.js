@@ -7,7 +7,8 @@ exports.selectArticles = async () => {
   JOIN comments
   ON articles.article_id = comments.article_id
   GROUP BY articles.article_id`);
-  return rows;
+  const articles = rows;
+  return articles;
 };
 
 exports.selectArticleById = async article_id => {
@@ -32,7 +33,7 @@ exports.selectArticleById = async article_id => {
   return article;
 };
 
-exports.patchArticleVotesById = async (article_id, inc_votes) => {
+exports.updateArticleVotesById = async (article_id, inc_votes) => {
   const { rows } = await db.query(
     `UPDATE articles
     SET votes = votes + $2
@@ -43,4 +44,22 @@ exports.patchArticleVotesById = async (article_id, inc_votes) => {
   );
   const article = rows[0];
   return article;
+};
+
+exports.selectArticleCommentsById = async article_id => {
+  const { rows } = await db.query(
+    `
+    SELECT * FROM comments
+    WHERE article_id = $1
+  ;`,
+    [article_id]
+  );
+  const comments = rows;
+  if (comments.length === 0) {
+    return Promise.reject({
+      status: 404,
+      msg: `No comments found for article_id: ${article_id}`,
+    });
+  }
+  return comments;
 };

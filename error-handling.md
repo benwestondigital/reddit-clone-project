@@ -63,7 +63,7 @@ Bear in mind, handling bad inputs from clients doesn't necessarily have to lead 
 
 ### GET `/api/articles/:article_id/comments`
 
--
+- Invalid article_id - DONE
 
 ### GET `/api/articles`
 
