@@ -86,3 +86,5 @@ Bear in mind, handling bad inputs from clients doesn't necessarily have to lead 
 
 - Resource doesn't exist - 404 not found
 - Invalid ID - 400 bad request
+
+### GET `/api/users`
