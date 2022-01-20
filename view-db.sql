@@ -1,4 +1,6 @@
 \c nc_news
 
-SELECT * FROM articles
-WHERE article_id = 1;
+SELECT * FROM topics;
+SELECT * FROM users;
+SELECT * FROM articles;
+SELECT * FROM comments;

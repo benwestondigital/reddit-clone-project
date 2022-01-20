@@ -9,7 +9,7 @@ const {
 
 const articleRouter = express.Router();
 
-articleRouter.get('', getArticles); //how to not include the '/'
+articleRouter.get('', getArticles);
 articleRouter.get('/:article_id', getArticleById);
 articleRouter.patch('/:article_id', patchArticleById);
 articleRouter.get('/:article_id/comments', getArticleCommentsById);
