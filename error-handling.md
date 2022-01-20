@@ -78,11 +78,11 @@ Bear in mind, handling bad inputs from clients doesn't necessarily have to lead 
 
 ## Stretch Routes
 
-### PATCH `/api/comments/:comment_id` --- stretch endpoint
+### PATCH `/api/comments/:comment_id`
 
 -
 
-### GET `/api/users/:username` --- stretch endpoint
+### GET `/api/users/:username`
 
 - Resource doesn't exist - 404 not found
 - Invalid ID - 400 bad request
