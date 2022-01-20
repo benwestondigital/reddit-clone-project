@@ -41,11 +41,6 @@ Bear in mind, handling bad inputs from clients doesn't necessarily have to lead 
 
 - No Errors
 
-### GET `/api/users/:username` --- stretch endpoint
-
-- Resource doesn't exist - 404 not found
-- Invalid ID - 400 bad request
-
 ### GET `/api/articles/:article_id`
 
 - Bad `article_id` (e.g. `/dog`) - DONE
@@ -73,10 +68,6 @@ Bear in mind, handling bad inputs from clients doesn't necessarily have to lead 
   - `topic` that is not in the database - DONE
   - `topic` that exists but does not have any articles associated with it - DONE
 
-### PATCH `/api/comments/:comment_id` --- stretch endpoint
-
--
-
 ### DELETE `/api/comments/:comment_id`
 
 - comment_id doesn't exist - DONE
@@ -84,3 +75,14 @@ Bear in mind, handling bad inputs from clients doesn't necessarily have to lead 
 ### GET `/api`
 
 - N/A
+
+## Stretch Routes
+
+### PATCH `/api/comments/:comment_id` --- stretch endpoint
+
+-
+
+### GET `/api/users/:username` --- stretch endpoint
+
+- Resource doesn't exist - 404 not found
+- Invalid ID - 400 bad request
