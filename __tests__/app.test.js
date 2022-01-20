@@ -67,7 +67,7 @@ describe('/api/articles', () => {
       const errorMsg = test.body.msg;
       expect(errorMsg).toBe('Invalid sort query');
     });
-    test('200 - changes sort_by order when passed order query', async () => {
+    test('200 - changes sort_by order when passed valid order query', async () => {
       const test = await request(app)
         .get('/api/articles?order=asc')
         .expect(200);
@@ -90,7 +90,14 @@ describe('/api/articles', () => {
         expect(article.topic).toBe('mitch');
       });
     });
-    test.only('ERROR: 404 - returns error when passed invalid topic query', async () => {
+    test('200 - returns empty array when topic exists but no articles associated with it', async () => {
+      const test = await request(app)
+        .get('/api/articles?topic=paper')
+        .expect(200);
+      const emptyArticles = test.body.articles;
+      expect(emptyArticles).toEqual([]);
+    });
+    test('ERROR: 404 - returns error when passed invalid topic query', async () => {
       const test = await request(app)
         .get('/api/articles?topic=invalidtopic')
         .expect(404);
@@ -264,7 +271,7 @@ describe('/api/comments/:comment_id', () => {
 describe('/api', () => {
   describe('GET', () => {
     test('responds with JSON describing all the endpoints', async () => {
-      const test = await request(app).get('/api/').expect(200);
+      const test = await request(app).get('/api').expect(200);
       const endpoints = test.body.endpoints;
     });
   });

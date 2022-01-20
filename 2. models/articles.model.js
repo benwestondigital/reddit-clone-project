@@ -41,11 +41,9 @@ exports.selectArticles = async (
   const { rows } = await db.query(queryStr, queryValues);
   const articles = rows;
 
-  if(!articles.length) {
+  if (!articles.length) {
     await checkExists('topics', 'slug', topic);
   }
-
-  console.log(rows,'hello from model');
 
   return articles;
 };

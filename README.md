@@ -88,7 +88,7 @@ x GET /api/articles
 X GET /api/articles/:article_id/comments
 X POST /api/articles/:article_id/comments
 X DELETE /api/comments/:comment_id
-GET /api
+x GET /api
 ```
 
 > Hosting and README time!
