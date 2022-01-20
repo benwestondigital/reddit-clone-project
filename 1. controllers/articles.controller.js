@@ -7,9 +7,9 @@ const {
 } = require('../2. models/articles.model');
 
 exports.getArticles = async (req, res, next) => {
-  // need to add queries
   try {
-    const articles = await selectArticles();
+    const { sort_by, order, topic } = req.query;
+    const articles = await selectArticles(sort_by, order, topic);
     res.status(200).send({ articles });
   } catch (err) {
     next(err);

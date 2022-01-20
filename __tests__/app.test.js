@@ -48,6 +48,55 @@ describe('/api/articles', () => {
         });
       });
     });
+    test('200 - sorts the data by default of date in desc order', async () => {
+      const test = await request(app).get('/api/articles').expect(200);
+      const articles = test.body.articles;
+      expect(articles).toBeSortedBy('created_at', { descending: true });
+    });
+    test('200 - sorts by any single valid column passed in as query', async () => {
+      const test = await request(app)
+        .get('/api/articles?sort_by=author')
+        .expect(200);
+      const articles = test.body.articles;
+      expect(articles).toBeSortedBy('author', { descending: true });
+    });
+    test('ERROR: 400 - returns error when passed invalid sort_by query', async () => {
+      const test = await request(app)
+        .get('/api/articles?sort_by=invalidquery')
+        .expect(400);
+      const errorMsg = test.body.msg;
+      expect(errorMsg).toBe('Invalid sort query');
+    });
+    test('200 - changes sort_by order when passed order query', async () => {
+      const test = await request(app)
+        .get('/api/articles?order=asc')
+        .expect(200);
+      const articles = test.body.articles;
+      expect(articles).toBeSortedBy('created_at', { ascending: true });
+    });
+    test('ERROR: 400 - returns error when passed invalid order query', async () => {
+      const test = await request(app)
+        .get('/api/articles?order=invalidquery')
+        .expect(400);
+      const errorMsg = test.body.msg;
+      expect(errorMsg).toBe('Invalid order query');
+    });
+    test('200 - filters articles when passed valid topic query', async () => {
+      const test = await request(app)
+        .get('/api/articles?topic=mitch')
+        .expect(200);
+      const articles = test.body.articles;
+      articles.forEach(article => {
+        expect(article.topic).toBe('mitch');
+      });
+    });
+    test.only('ERROR: 404 - returns error when passed invalid topic query', async () => {
+      const test = await request(app)
+        .get('/api/articles?topic=invalidtopic')
+        .expect(404);
+      const errorMsg = test.body.msg;
+      expect(errorMsg).toBe('Resource not found');
+    });
   });
 });
 
@@ -217,7 +266,6 @@ describe('/api', () => {
     test('responds with JSON describing all the endpoints', async () => {
       const test = await request(app).get('/api/').expect(200);
       const endpoints = test.body.endpoints;
-      console.log(endpoints);
     });
   });
 });
