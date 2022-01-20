@@ -3,6 +3,6 @@ const { getTopics } = require('../1. controllers/topics.controller');
 
 const topicRouter = express.Router();
 
-topicRouter.get('/', getTopics);
+topicRouter.route('/').get(getTopics);
 
 module.exports = topicRouter;

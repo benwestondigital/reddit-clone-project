@@ -10,7 +10,7 @@ apiRouter.use('/topics', topicRouter);
 apiRouter.use('/articles', articleRouter);
 apiRouter.use('/comments', commentRouter);
 
-apiRouter.get('', getEndpoints);
+apiRouter.get('/', getEndpoints);
 
 
 module.exports = apiRouter;

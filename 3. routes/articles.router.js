@@ -4,15 +4,21 @@ const {
   getArticleById,
   patchArticleById,
   getArticleCommentsById,
-  postArticleCommentById
+  postArticleCommentById,
 } = require('../1. controllers/articles.controller.js');
 
 const articleRouter = express.Router();
 
 articleRouter.get('', getArticles);
-articleRouter.get('/:article_id', getArticleById);
-articleRouter.patch('/:article_id', patchArticleById);
-articleRouter.get('/:article_id/comments', getArticleCommentsById);
-articleRouter.post('/:article_id/comments', postArticleCommentById)
+
+articleRouter
+  .route('/:article_id')
+  .get(getArticleById)
+  .patch(patchArticleById);
+
+articleRouter
+  .route('/:article_id/comments')
+  .get(getArticleCommentsById)
+  .post(postArticleCommentById);
 
 module.exports = articleRouter;
