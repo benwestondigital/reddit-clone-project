@@ -20,6 +20,7 @@ describe('/api/topics', () => {
       const test = await request(app).get('/api/topics').expect(200);
       const topics = test.body.topics;
       expect(topics).toBeInstanceOf(Array);
+      expect(topics).toHaveLength(3);
       topics.forEach(topic => {
         expect(topic).toMatchObject({
           slug: expect.any(String),
@@ -36,6 +37,7 @@ describe('/api/articles', () => {
       const test = await request(app).get('/api/articles').expect(200);
       const articles = test.body.articles;
       expect(articles).toBeInstanceOf(Array);
+      expect(articles).toHaveLength(5);
       articles.forEach(article => {
         expect(article).toMatchObject({
           author: expect.any(String),
@@ -86,6 +88,7 @@ describe('/api/articles', () => {
         .get('/api/articles?topic=mitch')
         .expect(200);
       const articles = test.body.articles;
+      expect(articles).toHaveLength(4);
       articles.forEach(article => {
         expect(article.topic).toBe('mitch');
       });
@@ -182,13 +185,29 @@ describe('/api/articles/:article_id', () => {
         .expect(400);
       expect(test.body.msg).toBe('Bad Request');
     });
-    test('ERROR - 400 Bad Request - incorrect type / failing schema validation', async () => {
+    test('ERROR - 400 Bad Request - incorrect value type / failing schema validation', async () => {
       const invalidVotes = { inc_votes: 'cat' };
       const test = await request(app)
         .patch('/api/articles/1')
         .send(invalidVotes)
         .expect(400);
       expect(test.body.msg).toBe('Bad Request');
+    });
+    test('ERROR - 400 Bad Request - incorrect key / failing schema validation', async () => {
+      const invalidVotes = { invalid_key: 1 };
+      const test = await request(app)
+        .patch('/api/articles/1')
+        .send(invalidVotes)
+        .expect(400);
+      expect(test.body.msg).toBe('Bad Request');
+    });
+    test('ERROR - 404 Not Found - invalid article id', async () => {
+      const invalidVotes = { inc_votes: 1 };
+      const test = await request(app)
+        .patch('/api/articles/999')
+        .send(invalidVotes)
+        .expect(404);
+      expect(test.body.msg).toBe('Resource not found');
     });
   });
 });
@@ -201,6 +220,7 @@ describe('/api/articles/:article_id/comments', () => {
         .expect(200);
       const comments = test.body.comments;
       expect(comments).toBeInstanceOf(Array);
+      expect(comments).toHaveLength(11);
       comments.forEach(comment => {
         expect(comment).toMatchObject({
           comment_id: expect.any(Number),
@@ -211,11 +231,24 @@ describe('/api/articles/:article_id/comments', () => {
         });
       });
     });
+    test('200: returns empty array for valid article_id with no comments', async () => {
+      const test = await request(app)
+        .get('/api/articles/2/comments')
+        .expect(200);
+      const comments = test.body.comments;
+      expect(comments).toEqual([]);
+    });
     test('ERROR - 404: Resource Not Found - article_id does not exist', async () => {
       const test = await request(app)
         .get('/api/articles/999/comments')
         .expect(404);
-      expect(test.body.msg).toBe('No comments found for article_id: 999');
+      expect(test.body.msg).toBe('Resource not found');
+    });
+    test('ERROR - 400: Bad Request - invalid article_id type', async () => {
+      const test = await request(app)
+        .get('/api/articles/not-an-id/comments')
+        .expect(400);
+      expect(test.body.msg).toBe('Bad Request');
     });
   });
   describe('POST', () => {
@@ -246,13 +279,13 @@ describe('/api/articles/:article_id/comments', () => {
         .expect(400);
       expect(test.body.msg).toBe('Bad Request');
     });
-    test('ERROR - 400 Bad Request - username not found', async () => {
+    test('ERROR - 404 Bad Request - username not found', async () => {
       const invalidComment = { username: 'Ben', body: 'Hello' };
       const test = await request(app)
         .post('/api/articles/1/comments')
         .send(invalidComment)
-        .expect(400);
-      expect(test.body.msg).toBe('Bad Request');
+        .expect(404);
+      expect(test.body.msg).toBe('Resource not found');
     });
   });
 });

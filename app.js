@@ -12,9 +12,11 @@ app.all('*', (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  const psqlErrorCodes = ['22P02', '23502', '23503'];
+  const psqlErrorCodes = ['22P02', '23502'];
   if (psqlErrorCodes.includes(err.code)) {
     res.status(400).send({ msg: 'Bad Request' });
+  } else if (['23503'].includes(err.code)) {
+    res.status(404).send({ msg: 'Resource not found' });
   } else next(err);
 });
 
@@ -25,7 +27,6 @@ app.use((err, req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  console.log(err,'error');
   res.status(500).send({ msg: 'internal server error' });
 });
 

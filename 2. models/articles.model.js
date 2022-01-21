@@ -1,5 +1,6 @@
 const db = require('../db/connection');
 const { checkExists } = require('../4. utils/utils');
+const articles = require('../db/data/test-data/articles');
 
 exports.selectArticles = async (
   sort_by = 'created_at',
@@ -79,7 +80,11 @@ exports.updateArticleVotesById = async (article_id, inc_votes) => {
     ;`,
     [article_id, inc_votes]
   );
-  const article = rows[0];
+  const [article] = rows;
+
+  if (!article) {
+    await checkExists('articles', 'article_id', article_id);
+  }
   return article;
 };
 
@@ -91,12 +96,11 @@ exports.selectArticleCommentsById = async article_id => {
   ;`,
     [article_id]
   );
+
   const comments = rows;
-  if (comments.length === 0) {
-    return Promise.reject({
-      status: 404,
-      msg: `No comments found for article_id: ${article_id}`,
-    });
+
+  if (!comments.length) {
+    await checkExists('articles', 'article_id', article_id);
   }
   return comments;
 };
@@ -110,6 +114,7 @@ exports.insertCommentByArticleId = async (article_id, username, body) => {
   RETURNING *;`,
     [article_id, username, body]
   );
-  const comment = rows[0];
+  const [comment] = rows;
+
   return comment;
 };
