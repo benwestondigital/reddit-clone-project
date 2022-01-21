@@ -312,9 +312,8 @@ describe('checkExists()', () => {
     expect(input).toBe('mitch');
   });
   test("returns a rejected promise if value doesn't exist in table", async () => {
-    const input = 'invalidtopic';
-    const test = await checkExists('topics', 'slug', input);
-    console.log(test);
-    expect(test).toEqual({msg: 'Resource not found', status: 404 });
+    await expect(
+      checkExists('topics', 'slug', 'invalidtopic')
+    ).rejects.toMatchObject({ msg: 'Resource not found', status: 404 });
   });
 });

@@ -165,22 +165,22 @@ _All of this can be done later on so don't worry about any of the above not tick
 
 SEEDING:
 
-- _Make sure that your primary keys in your table have the NOT NULL constraint applied. These primary keys define a set of rows in a table that can be referenced by another table - so for that we reason, we can not allow them to be NULL. We dont't have to make this check with SERIAL as this will auto-generate an INT in every place for each row_
+- _Make sure that your primary keys in your table have the NOT NULL constraint applied. These primary keys define a set of rows in a table that can be referenced by another table - so for that we reason, we can not allow them to be NULL. We dont't have to make this check with SERIAL as this will auto-generate an INT in every place for each row_ DONE
 
 TESTING:
 
-- _make sure we check that the array is the length we expect it to be if we are using forEach - we might expect 10 - but only 7 come back...if we only have a forEach to check the structure, we would still pass that test._
+- _make sure we check that the array is the length we expect it to be if we are using forEach - we might expect 10 - but only 7 come back...if we only have a forEach to check the structure, we would still pass that test._ DONE
 
-- _/api/articles/:article_id - PATCH - I noticed that you make a check to make sure that the key of the object provided is "inc_votes. We don't however have any tests for when the article_id is invalid or doesn't exist yet - if I put in say an article_id of 900 - I get back an empty object. Your tests covers the 400 error by default because I imagine the PSQL error is one of the codes you are checking for but it would nice to see this behaviour tested for._
+- _/api/articles/:article_id - PATCH - I noticed that you make a check to make sure that the key of the object provided is "inc_votes. We don't however have any tests for when the article_id is invalid or doesn't exist yet - if I put in say an article_id of 900 - I get back an empty object. Your tests covers the 400 error by default because I imagine the PSQL error is one of the codes you are checking for but it would nice to see this behaviour tested for._ DONE
 
-- _/api/articles/:article_id/comments - GET - If the article number is an invalid type, we get a 400 back and a error message: - "Bad Request", which is awesome! But there is no test for this behavious. It may seem nitpicky but whilst we are solving the behaviour and giving back the right thing, it should also be tested for._
+- _/api/articles/:article_id/comments - GET - If the article number is an invalid type, we get a 400 back and a error message: - "Bad Request", which is awesome! But there is no test for this behaviours. It may seem nitpicky but whilst we are solving the behaviour and giving back the right thing, it should also be tested for._ DONE
 
 - _/api/articles/:article_id/comments - POST - Similar feedback to above. _
 
 SQL:
 
-- _we need to make sure that we use a LEFT JOIN when using our aggregate functions. There may be some use cases where we don't. But it's important that we don't leave anything out when joining our tables. If we only use the JOIN constraint when joining two tables. Anything from the first table(LEFT) that isn't referenced by anything in the second table(RIGHT), will not be brought over. LEFT JOIN fixes this issues for us by bringing everything over from the first table, regardless of if it is referenced, which would be handy if we were doing some kind of count as 0 would be useful information also_
+- _we need to make sure that we use a LEFT JOIN when using our aggregate functions. There may be some use cases where we don't. But it's important that we don't leave anything out when joining our tables. If we only use the JOIN constraint when joining two tables. Anything from the first table(LEFT) that isn't referenced by anything in the second table(RIGHT), will not be brought over. LEFT JOIN fixes this issues for us by bringing everything over from the first table, regardless of if it is referenced, which would be handy if we were doing some kind of count as 0 would be useful information also_ DONE
 
-##SUMMARY
+## SUMMARY
 
 Excellent work here Ben and I think you are well on the way to having an amazing backend project. What I would say now is keep chipping away at those endpoints and test a thoroughly as you can.

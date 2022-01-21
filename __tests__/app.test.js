@@ -37,7 +37,7 @@ describe('/api/articles', () => {
       const test = await request(app).get('/api/articles').expect(200);
       const articles = test.body.articles;
       expect(articles).toBeInstanceOf(Array);
-      expect(articles).toHaveLength(5);
+      expect(articles).toHaveLength(12);
       articles.forEach(article => {
         expect(article).toMatchObject({
           author: expect.any(String),
@@ -88,7 +88,7 @@ describe('/api/articles', () => {
         .get('/api/articles?topic=mitch')
         .expect(200);
       const articles = test.body.articles;
-      expect(articles).toHaveLength(4);
+      expect(articles).toHaveLength(11);
       articles.forEach(article => {
         expect(article.topic).toBe('mitch');
       });

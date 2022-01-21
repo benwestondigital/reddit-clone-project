@@ -23,7 +23,7 @@ exports.selectArticles = async (
   let queryStr1 = `
   SELECT articles.*, COUNT(comment_id) AS comment_count
   FROM articles
-  JOIN comments
+  LEFT JOIN comments
   ON articles.article_id = comments.article_id`;
 
   const queryStr2 = ` 
@@ -54,7 +54,7 @@ exports.selectArticleById = async article_id => {
     `
   SELECT articles.*, COUNT(comment_id) AS comment_count
   FROM articles
-  JOIN comments
+  LEFT JOIN comments
   ON articles.article_id = comments.article_id
   WHERE articles.article_id = $1
   GROUP BY articles.article_id;
