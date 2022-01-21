@@ -3,6 +3,7 @@
 ## Built by Ben Weston (https://github.com/benwestondigital)
 
 ## Description
+
 This news project clones the back-end functionality of Reddit using Node.js/Express to serve articles, users, topics and commends in JSON format using a PostgreSQL database.
 
 You can access the API at: [Heroku](https://ben-reddit-project.herokuapp.com/api)
@@ -31,9 +32,9 @@ You can access the API at: [Heroku](https://ben-reddit-project.herokuapp.com/api
 
 - In your terminal:
 
-    $ git clone https://github.com/benwestondigital/reddit-clone-project.git
+    `$ git clone https://github.com/benwestondigital/reddit-clone-project.git`
 
-    $ cd reddit-clone-project
+    `$ cd reddit-clone-project`
 
 ## Running the Application
 
@@ -46,17 +47,17 @@ There is a provided `db` folder with some data, a [setup.sql](./db/setup.sql) fi
 
 - Setup database
 
-$ npm run setup-dbs && npm run seed
+`$ npm run setup-dbs && npm run seed`
 
 ## Testing the application
 
 To run the provided tests
 
-$ npm t
+`$ npm t`
 
 To run the dev environment
 
-$ npm run dev
+`$ npm run dev`
 
 This can then be accessed at [http://127.0.0.1:9090/api](http://127.0.0.1:9090/api)
 
