@@ -14,30 +14,30 @@ const seed = async data => {
     await db.query(`DROP TABLE IF EXISTS comments, articles, users, topics`);
 
     await db.query(`CREATE TABLE topics (
-    slug VARCHAR(50) PRIMARY KEY,
+    slug VARCHAR(50) PRIMARY KEY NOT NULL,
     description VARCHAR(500) NOT NULL
   );`);
 
     await db.query(`CREATE TABLE users (
-    username VARCHAR(50) PRIMARY KEY,
+    username VARCHAR(50) PRIMARY KEY NOT NULL,
     avatar_url VARCHAR(500) NOT NULL,
     name VARCHAR(500) NOT NULL
     );`);
 
     await db.query(`CREATE TABLE articles (
-    article_id SERIAL PRIMARY KEY,
+    article_id SERIAL PRIMARY KEY NOT NULL,
     title VARCHAR(500) NOT NULL,
     body TEXT NOT NULL,
     votes INT DEFAULT 0 NOT NULL,
-    topic VARCHAR(500) REFERENCES topics(slug),
-    author VARCHAR(500) REFERENCES users(username),
+    topic VARCHAR(500) REFERENCES topics(slug) NOT NULL,
+    author VARCHAR(500) REFERENCES users(username) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );`);
 
     await db.query(`CREATE TABLE comments (
-    comment_id SERIAL PRIMARY KEY,
-    author VARCHAR(500) REFERENCES users(username),
-    article_id INT REFERENCES articles(article_id),
+    comment_id SERIAL PRIMARY KEY NOT NULL,
+    author VARCHAR(500) REFERENCES users(username) NOT NULL,
+    article_id INT REFERENCES articles(article_id) NOT NULL,
     votes INT DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     body VARCHAR(500) NOT NULL
