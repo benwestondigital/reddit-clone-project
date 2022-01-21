@@ -48,9 +48,9 @@ _All of this can be done later on so don't worry about any of the above not tick
 - `PATCH /api/articles/:article_id`
 
   - [ ✅ ] Status 200, updated single article object
-  - [ ] Status 400, invalid ID, e.g. string of "not-an-id"
+  - [ ✅ ] Status 400, invalid ID, e.g. string of "not-an-id"
   - [ ✅ ] Status 400, invalid inc_votes type, e.g. property is not a number
-  - [ ] Status 404, non existent ID, e.g. 0 or 9999
+  - [ ✅ ] Status 404, non existent ID, e.g. 0 or 9999
   - [ ] Status 200, missing `inc_votes` key. No effect to article.
 
 - `GET /api/articles`

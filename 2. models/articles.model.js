@@ -1,6 +1,5 @@
 const db = require('../db/connection');
 const { checkExists } = require('../4. utils/utils');
-const articles = require('../db/data/test-data/articles');
 
 exports.selectArticles = async (
   sort_by = 'created_at',

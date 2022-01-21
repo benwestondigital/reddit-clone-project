@@ -150,7 +150,7 @@ describe('/api/articles/:article_id', () => {
         votes: 101,
         topic: 'mitch',
         author: 'butter_bridge',
-        created_at: "2020-11-03T09:12:00.000Z",
+        created_at: '2020-11-03T09:12:00.000Z',
       });
     });
     test('200 - decrements the article votes below 0 and responds with the updated article ', async () => {
@@ -166,7 +166,7 @@ describe('/api/articles/:article_id', () => {
         votes: -400,
         topic: 'mitch',
         author: 'butter_bridge',
-        created_at: "2020-11-03T09:12:00.000Z",
+        created_at: '2020-11-03T09:12:00.000Z',
       });
     });
     test('ERROR - 400 Bad Request - malformed body / missing required fields', async () => {
@@ -190,6 +190,14 @@ describe('/api/articles/:article_id', () => {
       const test = await request(app)
         .patch('/api/articles/1')
         .send(invalidVotes)
+        .expect(400);
+      expect(test.body.msg).toBe('Bad Request');
+    });
+    test('ERROR - 400: Bad Request - invalid article_id type', async () => {
+      const votes = { inc_votes: 1 };
+      const test = await request(app)
+        .patch('/api/articles/not-an-id')
+        .send(votes)
         .expect(400);
       expect(test.body.msg).toBe('Bad Request');
     });
