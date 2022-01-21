@@ -38,6 +38,8 @@ exports.formattedComments = commentData => {
   });
 };
 
+
+//need to write tests
 exports.checkExists = async (table, column, value) => {
   const queryStr = format(`SELECT * FROM %I WHERE %I = $1`, table, column);
   const dbOutput = await db.query(queryStr, [value]);
