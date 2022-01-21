@@ -4,7 +4,7 @@ module.exports = [
     topic: 'mitch',
     author: 'butter_bridge',
     body: 'I find this existence challenging',
-    created_at: new Date(1594329060000),
+    created_at: new Date(1604394720000),
     votes: 100
   },
   {
