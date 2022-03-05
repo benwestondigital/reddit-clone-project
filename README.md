@@ -1,6 +1,6 @@
 # Back End Project - Reddit-Clone API
 
-![image](https://user-images.githubusercontent.com/83911563/156884050-c45f7bbb-2445-4f7e-b761-10a7fdaa7336.png)
+![API Available Endpoints](https://user-images.githubusercontent.com/83911563/156884330-a7a35be9-0b03-4d14-bc03-47f18f9bf65f.png)
 
 
 ## Built by Ben Weston (https://github.com/benwestondigital)
@@ -9,7 +9,8 @@
 
 This news project clones the back-end functionality of Reddit using Node.js/Express to serve articles, users, topics and commends in JSON format using a PostgreSQL database.
 
-You can access the API at: [Heroku](https://ben-reddit-project.herokuapp.com/api)
+### Website
+- Hosted link: [Heroku](https://ben-reddit-project.herokuapp.com/api)
 
 ## Setting up / Installation Requirements
 
@@ -28,6 +29,7 @@ You can access the API at: [Heroku](https://ben-reddit-project.herokuapp.com/api
 ### Dev Dependencies
 
 - jest 27.x [jest](https://www.npmjs.com/package/jest)
+- jest-sorted 1.x [jest-sorted](https://www.npmjs.com/package/jest-sorted)
 - supertest 6.x [supertest](https://npmjs.com/package/supertest)
 - nodemon 2.x [nodemon](https://www.npmjs.com/package/nodemon)
 
