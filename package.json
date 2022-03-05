@@ -6,6 +6,7 @@
   "scripts": {
     "setup-dbs": "psql -f ./db/setup.sql",
     "start": "node listen.js",
+    "dev": "nodemon ./app/listen.js",
     "view-db": "psql -f ./view-db.sql > see-my-db.txt",
     "seed": "node ./db/seeds/run-seed.js",
     "seed:prod": "NODE_ENV=production DATABASE_URL=$(heroku config:get DATABASE_URL) npm run seed",
