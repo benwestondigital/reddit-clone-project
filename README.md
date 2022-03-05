@@ -8,16 +8,13 @@
 
 ![API Available Endpoints](https://user-images.githubusercontent.com/83911563/156884330-a7a35be9-0b03-4d14-bc03-47f18f9bf65f.png)
 
+## Website [Hosted Link](https://ben-reddit-project.herokuapp.com/api)
 
-## Built by Ben Weston (https://github.com/benwestondigital)
+### Built by Ben Weston [github](https://github.com/benwestondigital)
 
 ## Description
 
-This news project clones the back-end functionality of Reddit using Node.js/Express to serve articles, users, topics and comments in JSON format using a PostgreSQL database.
-
-### Website
-
-- Hosted link: [Heroku](https://ben-reddit-project.herokuapp.com/api)
+This news project clones the back-end functionality of Reddit using Node.js and Express to serve articles, users, topics and comments in JSON format using a PostgreSQL database.
 
 The list of available endpoints and their descriptions are shown on the `/api` endpoint.
 
