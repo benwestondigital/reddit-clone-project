@@ -48,7 +48,10 @@ The list of available endpoints are shown on the `/api` page.
 - Initialising in Node / installing dependencies
     `npm install`
 
-You will need to create _two_ `.env` files for the app: `.env.test` and `.env.development`. Into these files add `PGDATABASE=<database_name here>` with your choice of database name for both the dev and test environment.
+You will need to create _two_ `.env` files for the app: `.env.test` and `.env.development`.
+
+In the `env.development` file, add `PGDATABASE=nc_news`
+In the `env.test` file, add `PGDATABASE=nc_news_test`
 
 There is a provided `db` folder with some data, a [setup.sql](./db/setup.sql) file and a `seeds` folder.
 
@@ -64,7 +67,7 @@ To check that the database setup was successful, you can run the following to cr
 
 To run the provided tests
 
-`$ npm t`
+`$ npm test`
 
 To run the dev environment
 
