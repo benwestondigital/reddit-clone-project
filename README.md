@@ -7,12 +7,12 @@
 
 ## Description
 
-This news project clones the back-end functionality of Reddit using Node.js/Express to serve articles, users, topics and commends in JSON format using a PostgreSQL database.
+This news project clones the back-end functionality of Reddit using Node.js/Express to serve articles, users, topics and comments in JSON format using a PostgreSQL database.
 
 ### Website
 - Hosted link: [Heroku](https://ben-reddit-project.herokuapp.com/api)
 
-The list of available endpoints are shown on the `/api` page.
+The list of available endpoints and their descriptions are shown on the `/api` endpoint.
 
 ## Setting up / Installation Requirements
 
