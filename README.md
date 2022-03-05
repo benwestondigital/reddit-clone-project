@@ -20,14 +20,16 @@ The list of available endpoints and their descriptions are shown on the `/api` e
 ### Prerequisites
 
 ![image](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![image](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+
 - Node.js 17.x [Node.js](https://nodejs.org/en/)
-- ![image](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 - PostgreSQL 12.9 [psql](https://www.postgresql.org/)
 
 ### Dependencies
 
-- dotenv 14.x [dotenv](https://www.npmjs.com/package/dotenv)
 ![image](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+
+- dotenv 14.x [dotenv](https://www.npmjs.com/package/dotenv)
 - express 4.x [express](https://www.npmjs.com/package/express)
 - pg 8.x [node-postgres](https://www.npmjs.com/package/pg)
 - pg-format 1.x [pg-format](https://www.npmjs.com/package/pg-format)
@@ -35,6 +37,7 @@ The list of available endpoints and their descriptions are shown on the `/api` e
 ### Dev Dependencies
 
 ![image](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)
+
 - jest 27.x [jest](https://www.npmjs.com/package/jest)
 - jest-sorted 1.x [jest-sorted](https://www.npmjs.com/package/jest-sorted)
 - supertest 6.x [supertest](https://npmjs.com/package/supertest)
