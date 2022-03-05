@@ -54,6 +54,7 @@ In the `env.development` file, add `PGDATABASE=nc_news`
 
 In the `env.test` file, add `PGDATABASE=nc_news_test`
 
+
 There is a provided `db` folder with some data, a [setup.sql](./db/setup.sql) file and a `seeds` folder.
 
 - Setup database
