@@ -11,7 +11,8 @@ This news project clones the back-end functionality of Reddit using Node.js/Expr
 
 ### Website
 - Hosted link: [Heroku](https://ben-reddit-project.herokuapp.com/api)
-The list of available endpoints are shown on this page.
+
+The list of available endpoints are shown on the `/api` page.
 
 ## Setting up / Installation Requirements
 
