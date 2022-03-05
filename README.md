@@ -1,6 +1,6 @@
 # Back End Project - Reddit-Clone API
 
-![image](https://user-images.githubusercontent.com/83911563/156884050-c45f7bbb-2445-4f7e-b761-10a7fdaa7336.png)
+![API Available Endpoints](https://user-images.githubusercontent.com/83911563/156884330-a7a35be9-0b03-4d14-bc03-47f18f9bf65f.png)
 
 
 ## Built by Ben Weston (https://github.com/benwestondigital)
