@@ -54,6 +54,10 @@ There is a provided `db` folder with some data, a [setup.sql](./db/setup.sql) fi
 
 `$ npm run setup-dbs && npm run seed`
 
+To check that the database setup was successful, you can run the following to create a text file `see-my-db.txt` containing all of the database data.
+
+`$ npm run view-db`
+
 ## Testing the application
 
 To run the provided tests
