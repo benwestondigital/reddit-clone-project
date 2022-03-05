@@ -1,4 +1,4 @@
-# Reddit-Clone-Project API
+# Back End Project - Reddit-Clone API
 
 ## Built by Ben Weston (https://github.com/benwestondigital)
 
