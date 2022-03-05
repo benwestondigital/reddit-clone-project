@@ -28,6 +28,7 @@ You can access the API at: [Heroku](https://ben-reddit-project.herokuapp.com/api
 ### Dev Dependencies
 
 - jest 27.x [jest](https://www.npmjs.com/package/jest)
+- jest-sorted 1.x [jest-sorted](https://www.npmjs.com/package/jest-sorted)
 - supertest 6.x [supertest](https://npmjs.com/package/supertest)
 - nodemon 2.x [nodemon](https://www.npmjs.com/package/nodemon)
 
