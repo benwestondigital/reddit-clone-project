@@ -1,14 +1,9 @@
-const db = require('../db/connection.js');
-
 const {
   formattedTopics,
   formattedUsers,
   formattedArticles,
   formattedComments,
-  checkExists,
 } = require('../4. utils/utils');
-
-afterAll(() => db.end());
 
 describe('formattedTopics()', () => {
   test('input is not output', () => {
@@ -297,23 +292,5 @@ describe('formattedComments()', () => {
         "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
       ],
     ]);
-  });
-});
-
-describe('checkExists()', () => {
-  test('input is not output', async () => {
-    const input = 'mitch';
-    const test = await checkExists('topics', 'slug', input);
-    expect(test).not.toEqual(input);
-  });
-  test('input is not mutated', async () => {
-    const input = 'mitch';
-    await checkExists('topics', 'slug', input);
-    expect(input).toBe('mitch');
-  });
-  test("returns a rejected promise if value doesn't exist in table", async () => {
-    await expect(
-      checkExists('topics', 'slug', 'invalidtopic')
-    ).rejects.toMatchObject({ msg: 'Resource not found', status: 404 });
   });
 });

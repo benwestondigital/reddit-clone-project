@@ -4,6 +4,10 @@ const seed = require('../db/seeds/seed.js');
 const request = require('supertest');
 const app = require('../app');
 
+const {
+  checkExists,
+} = require('../4. utils/utils');
+
 beforeEach(() => seed(testData));
 afterAll(() => db.end());
 
@@ -315,5 +319,24 @@ describe('/api', () => {
       const test = await request(app).get('/api').expect(200);
       const endpoints = test.body.endpoints;
     });
+  });
+});
+
+// as this util function requires access to the database I have put it in this testing file with the api endpoint tests
+describe('checkExists()', () => {
+  test('input is not output', async () => {
+    const input = 'mitch';
+    const test = await checkExists('topics', 'slug', input);
+    expect(test).not.toEqual(input);
+  });
+  test('input is not mutated', async () => {
+    const input = 'mitch';
+    await checkExists('topics', 'slug', input);
+    expect(input).toBe('mitch');
+  });
+  test("returns a rejected promise if value doesn't exist in table", async () => {
+    await expect(
+      checkExists('topics', 'slug', 'invalidtopic')
+    ).rejects.toMatchObject({ msg: 'Resource not found', status: 404 });
   });
 });
